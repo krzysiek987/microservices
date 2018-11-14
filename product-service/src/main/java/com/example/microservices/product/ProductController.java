@@ -43,7 +43,7 @@ public class ProductController {
 
 	@PutMapping("{id}")
 	public Product update(@PathVariable UUID id, @RequestBody Product product) {
-		if(!Objects.equals(id, product.getId())) {
+		if (!Objects.equals(id, product.getId())) {
 			throw new IllegalArgumentException("Id mismatch");
 		}
 		return productRepository.save(product);

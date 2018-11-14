@@ -1,9 +1,9 @@
 plugins {
     id 'io.franzbecker.gradle-lombok' version '1.14'
-	id 'java'
-	id 'idea'
-	id 'org.springframework.boot' version '2.1.0.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '2.1.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
 }
 
 group = 'com.example'
@@ -11,7 +11,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.11
 
 repositories {
-	jcenter()
+    jcenter()
 }
 
 lombok {
