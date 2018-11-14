@@ -1,4 +1,4 @@
-package com.example.microservices.offer;
+package com.example.offerservice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

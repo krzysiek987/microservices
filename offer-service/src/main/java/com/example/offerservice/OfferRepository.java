@@ -1,4 +1,4 @@
-package com.example.microservices.offer;
+package com.example.offerservice;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 

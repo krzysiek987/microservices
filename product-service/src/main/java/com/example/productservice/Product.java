@@ -1,4 +1,4 @@
-package com.example.microservices.offer;
+package com.example.productservice;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @Document
-public class Offer {
+public class Product {
 
     @Id
     private UUID id;
