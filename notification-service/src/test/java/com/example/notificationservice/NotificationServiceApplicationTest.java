@@ -1,4 +1,4 @@
-package com.example.microservices.offer;
+package com.example.notificationservice;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class OfferApplicationTests {
+public class NotificationServiceApplicationTest {
 
 	@Test
 	public void contextLoads() {
