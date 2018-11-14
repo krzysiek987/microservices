@@ -1,33 +1,47 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.0.RELEASE'
+        springBootVersion = '2.0.6.RELEASE'
+        gradleLombokPluginVersion = '1.14'
     }
     repositories {
-        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.franzbecker:gradle-lombok:${gradleLombokPluginVersion}")
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+subprojects {
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 11
+    apply plugin: 'io.franzbecker.gradle-lombok'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-repositories {
-    mavenCentral()
-}
+    group = 'com.example'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.11
 
+    repositories {
+        jcenter()
+    }
 
-dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
-    implementation('org.springframework.boot:spring-boot-starter-webflux')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-    testImplementation('io.projectreactor:reactor-test')
+    lombok {
+        version = "1.18.2"
+    }
+
+    dependencies {
+        implementation('org.springframework.boot:spring-boot-starter-web')
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'junit', module: 'junit'
+        }
+        testImplementation('org.junit.jupiter:junit-jupiter-api')
+        testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
+    }
+
 }
