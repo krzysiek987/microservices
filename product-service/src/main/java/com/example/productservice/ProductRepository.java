@@ -1,12 +1,11 @@
 package com.example.productservice;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.UUID;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface ProductRepository extends MongoRepository<Product, UUID> {
+public interface ProductRepository extends ReactiveMongoRepository<Product, UUID> {
 
 
 }
