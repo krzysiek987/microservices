@@ -1,2 +1,13 @@
 server:
   port: 9003
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+info:
+  additionalData: test
+spring:
+  info:
+    build:
+      location: classpath:/BOOT-INF/classes/META-INF/build-info.properties
