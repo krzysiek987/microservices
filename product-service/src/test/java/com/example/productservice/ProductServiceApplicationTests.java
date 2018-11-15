@@ -1,4 +1,4 @@
-package com.example.offerservice;
+package com.example.productservice;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class OfferServiceApplicationTests {
+public class ProductServiceApplicationTests {
 
 	@Test
 	public void contextLoads() {
