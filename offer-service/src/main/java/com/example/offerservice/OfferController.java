@@ -1,6 +1,11 @@
 package com.example.offerservice;
 
+import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,14 +48,9 @@ public class OfferController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Offer insert(@RequestBody Offer offer) {
 		validateProductId(offer.getProductId());
-
+		validateUserId(offer.getBidderId());
 		offer.setId(idGenerator.generateId());
 		return repository.insert(offer);
-	}
-
-	private void validateProductId(final UUID productId) {
-		// get http://localhost:9001/products/{productId}
-		// responseStatus == 200?
 	}
 
 	@PutMapping("{id}")
@@ -67,4 +67,37 @@ public class OfferController {
 		return ResponseEntity.noContent().build();
 	}
 
+	private void validateProductId(final UUID id) {
+		// get http://localhost:9001/products/{productId}
+		// responseStatus == 200?
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("http://localhost:9000/products/" + id))
+				.build();
+		try {
+			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
+			log.info("Response status for product {} is {}", id, response.statusCode());
+			if (!Objects.equals(response.statusCode(), 200)) {
+				//return 404 or validation error
+			}
+		} catch (Exception e) {
+			log.error("Error during product validation", e);
+			//return 404 or validation error
+		}
+	}
+
+	private void validateUserId(final UUID id) {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("http://localhost:9000/users/" + id))
+				.build();
+		try {
+			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
+			log.info("Response status for user {} is {}", id, response.statusCode());
+			if (!Objects.equals(response.statusCode(), 200)) {
+				//return 404 or validation error
+			}
+		} catch (Exception e) {
+			log.error("Error during user validation", e);
+			//return 404 or validation error
+		}
+	}
 }

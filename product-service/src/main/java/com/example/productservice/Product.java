@@ -18,5 +18,6 @@ public class Product {
 	@Id
 	private UUID id;
 	private String name;
+	private UUID ownerId;
 
 }

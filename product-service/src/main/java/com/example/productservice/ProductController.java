@@ -42,8 +42,12 @@ public class ProductController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Product> insert(@RequestBody Product request) {
+		validateUserId(request.getId());
 		request.setId(idGenerator.generateId());
 		return repository.insert(request);
+	}
+
+	private void validateUserId(final UUID id) {
 	}
 
 	@PutMapping("{id}")
