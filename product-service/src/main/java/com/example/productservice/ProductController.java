@@ -25,7 +25,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("products")
 public class ProductController {
 
-    private final ProductRepository repository;
+	private final ProductRepository repository;
 	private final IdGenerator idGenerator;
 
 	@GetMapping

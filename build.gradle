@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.0.RELEASE'
+        springBootVersion = '2.0.6.RELEASE'
         gradleLombokPluginVersion = '1.14'
         gradleGitPluginVersion = '2.0.0-beta1'
     }
@@ -16,6 +16,7 @@ buildscript {
         classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:$gradleGitPluginVersion"
     }
 }
+
 
 subprojects {
 
