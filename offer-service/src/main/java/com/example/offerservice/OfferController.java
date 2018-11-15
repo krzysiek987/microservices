@@ -1,6 +1,5 @@
 package com.example.offerservice;
 
-import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,12 +43,9 @@ public class OfferController {
 
 	@PutMapping("{id}")
 	public Offer update(@PathVariable UUID id, @RequestBody Offer requestOffer) {
-		if (!Objects.equals(id, requestOffer.getId())) {
-			throw new IllegalArgumentException("Id mismatch");
-		}
 		Offer databaseOffer = repository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Incorrect offer id " + id));
-		databaseOffer.setValue(requestOffer.getValue());
+		databaseOffer.setName(requestOffer.getName());
 		return repository.save(requestOffer);
 	}
 

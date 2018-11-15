@@ -2,7 +2,6 @@ package com.example.productservice;
 
 import static org.springframework.http.ResponseEntity.notFound;
 
-import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,11 +47,14 @@ public class ProductController {
 	}
 
 	@PutMapping("{id}")
-	public Mono<Product> update(@PathVariable UUID id, @RequestBody Product reuqest) {
-		if (!Objects.equals(id, reuqest.getId())) {
-			throw new IllegalArgumentException("Id mismatch");
-		}
-		return repository.save(reuqest);
+	public Mono<Product> update(@PathVariable UUID id, @RequestBody Product requestProduct) {
+		return repository.findById(id)
+				.map(databaseProduct ->
+						databaseProduct.toBuilder()
+								.name(requestProduct.getName())
+								.build()
+				)
+				.flatMap(repository::save);
 	}
 
 	@DeleteMapping("{id}")
