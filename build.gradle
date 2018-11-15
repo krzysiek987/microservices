@@ -2,6 +2,7 @@ buildscript {
     ext {
         springBootVersion = '2.0.6.RELEASE'
         gradleLombokPluginVersion = '1.14'
+        gradleGitPluginVersion = '2.0.0-beta1'
     }
     repositories {
         jcenter()
@@ -12,15 +13,16 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.franzbecker:gradle-lombok:${gradleLombokPluginVersion}")
+        classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:$gradleGitPluginVersion"
     }
 }
-
 
 subprojects {
 
     apply plugin: 'io.franzbecker.gradle-lombok'
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: "com.gorylenko.gradle-git-properties"
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
@@ -34,6 +36,10 @@ subprojects {
 
     lombok {
         version = "1.18.2"
+    }
+
+    springBoot {
+        buildInfo()
     }
 
     dependencies {
