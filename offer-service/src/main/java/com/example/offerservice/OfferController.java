@@ -49,7 +49,8 @@ public class OfferController {
 	}
 
 	private void validateProductId(final UUID productId) {
-
+		// get http://localhost:9001/products/{productId}
+		// responseStatus == 200?
 	}
 
 	@PutMapping("{id}")
