@@ -1,5 +1,6 @@
 package com.example.offerservice;
 
+import java.net.http.HttpClient;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("offers")
 public class OfferController {
 
+	private final HttpClient httpClient = HttpClient.newHttpClient();
 	private final OfferRepository repository;
 	private final IdGenerator idGenerator;
 
@@ -40,8 +42,14 @@ public class OfferController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Offer insert(@RequestBody Offer offer) {
+		validateProductId(offer.getProductId());
+
 		offer.setId(idGenerator.generateId());
 		return repository.insert(offer);
+	}
+
+	private void validateProductId(final UUID productId) {
+
 	}
 
 	@PutMapping("{id}")
