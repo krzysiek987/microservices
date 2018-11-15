@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.IdGenerator;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OfferController {
 
 	private final OfferRepository repository;
+	private final IdGenerator idGenerator;
 
 	@GetMapping
 	public Iterable<Offer> getList() {
@@ -38,6 +40,7 @@ public class OfferController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Offer insert(@RequestBody Offer offer) {
+		offer.setId(idGenerator.generateId());
 		return repository.insert(offer);
 	}
 
