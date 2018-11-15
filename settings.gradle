@@ -1,4 +1,3 @@
 rootProject.name = 'microservices-parent'
 
 include 'product-service', 'offer-service', 'user-service', 'notification-service', 'api-gateway'
-include 'product-service', 'offer-service', 'user-service', 'notification-service', 'api-gateway'
