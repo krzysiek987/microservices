@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.0.6.RELEASE'
         gradleLombokPluginVersion = '1.14'
         gradleGitPluginVersion = '2.0.0-beta1'
+        gradleDockerPluginVersion = '0.20.1'
     }
     repositories {
         jcenter()
@@ -14,6 +15,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.franzbecker:gradle-lombok:${gradleLombokPluginVersion}")
         classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:$gradleGitPluginVersion"
+        classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:$gradleDockerPluginVersion"
     }
 }
 
@@ -25,6 +27,7 @@ subprojects {
     apply plugin: "com.gorylenko.gradle-git-properties"
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.palantir.docker'
 
     group = 'com.example'
     version = '0.0.1-SNAPSHOT'
@@ -40,6 +43,12 @@ subprojects {
 
     springBoot {
         buildInfo()
+    }
+
+    docker {
+        name "${project.group}/${bootJar.baseName}"
+        copySpec.from("build/libs").into("libs")
+        buildArgs([JAR_FILE: "libs/$bootJar.archiveName"])
     }
 
     dependencies {

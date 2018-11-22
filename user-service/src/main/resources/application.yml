@@ -5,3 +5,10 @@ management:
     web:
       exposure:
         include: "*"
+
+---
+spring:
+  profiles: dev
+  data:
+    mongodb:
+      host: users-db
