@@ -1,6 +1,13 @@
 version: '3.1'
 
 services:
+  discovery-service:
+    image: com.example/discovery-service
+    restart: always
+    ports:
+    - 8761:8761
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
   api-gateway:
     image: com.example/api-gateway
     restart: always
@@ -8,31 +15,33 @@ services:
     - 8080:8080
     environment:
       SPRING_PROFILES_ACTIVE: dev
-  user-service:
-    image: com.example/user-service
-    restart: always
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
   users-db:
     image: mongo
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-  product-service:
-    image: com.example/product-service
+  user-service:
+    image: com.example/user-service
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+  offers-db:
+    image: mongo
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+  offer-service:
+    image: com.example/offer-service
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
   products-db:
     image: mongo
     restart: always
-  offer-service:
-    image: com.example/offer-service
-    restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-  offers-db:
-    image: mongo
+  product-service:
+    image: com.example/product-service
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev

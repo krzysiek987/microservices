@@ -1,14 +1,11 @@
 package com.example.offerservice;
 
-import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.util.Objects;
+import java.util.Map;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.IdGenerator;
@@ -23,17 +20,28 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@RefreshScope
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("offers")
 public class OfferController {
 
 	private final HttpClient httpClient = HttpClient.newHttpClient();
 	private final OfferRepository repository;
 	private final IdGenerator idGenerator;
+	private final String message;
+	private final ApiGatewayClient apiGatewayClient;
+
+	public OfferController(final OfferRepository repository, final IdGenerator idGenerator,
+			final @Value("${message}") String message, final ApiGatewayClient apiGatewayClient) {
+		this.repository = repository;
+		this.idGenerator = idGenerator;
+		this.message = message;
+		this.apiGatewayClient = apiGatewayClient;
+	}
 
 	@GetMapping
 	public Iterable<Offer> getList() {
+		log.info(message);
 		return repository.findAll();
 	}
 
@@ -68,36 +76,10 @@ public class OfferController {
 	}
 
 	private void validateProductId(final UUID id) {
-		// get http://localhost:9001/products/{productId}
-		// responseStatus == 200?
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("http://localhost:9000/products/" + id))
-				.build();
-		try {
-			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
-			log.info("Response status for product {} is {}", id, response.statusCode());
-			if (!Objects.equals(response.statusCode(), 200)) {
-				//return 404 or validation error
-			}
-		} catch (Exception e) {
-			log.error("Error during product validation", e);
-			//return 404 or validation error
-		}
+		Map<String, Object> product = apiGatewayClient.getProduct(id);
 	}
 
 	private void validateUserId(final UUID id) {
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("http://localhost:9000/users/" + id))
-				.build();
-		try {
-			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
-			log.info("Response status for user {} is {}", id, response.statusCode());
-			if (!Objects.equals(response.statusCode(), 200)) {
-				//return 404 or validation error
-			}
-		} catch (Exception e) {
-			log.error("Error during user validation", e);
-			//return 404 or validation error
-		}
+		Map<String, Object> user = apiGatewayClient.getUser(id);
 	}
 }

@@ -1,3 +1,4 @@
 rootProject.name = 'microservices-parent'
 
+include 'discovery-service', 'config-service'
 include 'product-service', 'offer-service', 'user-service', 'notification-service', 'api-gateway'
