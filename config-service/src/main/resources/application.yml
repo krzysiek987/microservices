@@ -8,10 +8,3 @@ spring:
       server:
         git:
           uri: https://github.com/krzysiek987/config-test.git
----
-spring:
-  profiles: dev
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/

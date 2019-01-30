@@ -1,17 +1,11 @@
-
 server:
   port: 9003
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
 spring:
   application:
     name: user-service
----
 
 ---
+
 spring:
   profiles: dev
   data:

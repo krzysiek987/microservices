@@ -4,11 +4,3 @@ server:
 spring:
   application:
     name: notification-service
-
----
-spring:
-  profiles: dev
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/
