@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.6.RELEASE'
-        gradleLombokPluginVersion = '1.14'
-        gradleGitPluginVersion = '2.0.0-beta1'
+        springBootVersion = '2.1.2.RELEASE'
+        gradleLombokPluginVersion = '2.0'
+        gradleGitPluginVersion = '2.0.0'
         gradleDockerPluginVersion = '0.20.1'
     }
     repositories {
@@ -12,8 +12,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.franzbecker:gradle-lombok:${gradleLombokPluginVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath("io.franzbecker:gradle-lombok:$gradleLombokPluginVersion")
         classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:$gradleGitPluginVersion"
         classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:$gradleDockerPluginVersion"
     }
@@ -22,7 +22,7 @@ buildscript {
 subprojects {
 
     ext {
-        springCloudVersion = 'Finchley.SR2'
+        springCloudVersion = 'Greenwich.RELEASE'
     }
 
     apply plugin: 'io.franzbecker.gradle-lombok'
@@ -39,10 +39,6 @@ subprojects {
 
     repositories {
         jcenter()
-    }
-
-    lombok {
-        version = "1.18.2"
     }
 
     springBoot {
@@ -68,9 +64,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
         }
     }
-
-
 }
