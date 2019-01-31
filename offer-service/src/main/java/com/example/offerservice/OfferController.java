@@ -4,9 +4,10 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.IdGenerator;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OfferController {
 
 	private final OfferRepository repository;
-	private final IdGenerator idGenerator;
 	private final ApiGatewayClient apiGatewayClient;
+	private final Source source;
 
 	@GetMapping
 	public Iterable<Offer> getList() {
@@ -44,8 +45,9 @@ public class OfferController {
 	public Offer insert(@RequestBody Offer offer) {
 		validateProductId(offer.getProductId());
 		validateUserId(offer.getBidderId());
-		offer.setId(idGenerator.generateId());
-		return repository.insert(offer);
+		Offer result = repository.insert(offer);
+		source.output().send(new GenericMessage<>(result));
+		return result;
 	}
 
 	@PutMapping("{id}")
@@ -63,7 +65,7 @@ public class OfferController {
 	}
 
 	private void validateProductId(final UUID id) {
-		Map<String, Object> product = apiGatewayClient.getProduct(id);
+		apiGatewayClient.getProduct(id);
 	}
 
 	private void validateUserId(final UUID id) {

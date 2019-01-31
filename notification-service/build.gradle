@@ -1,0 +1,6 @@
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
+
+    testImplementation('org.springframework.cloud:spring-cloud-stream-test-support')
+}

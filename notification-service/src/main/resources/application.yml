@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: notification-service
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: offer-event

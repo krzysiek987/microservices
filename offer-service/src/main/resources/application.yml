@@ -1,9 +1,13 @@
 spring:
   application:
     name: offer-service
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: offer-event
 server:
   port: 9002
-message: test
 
 ---
 

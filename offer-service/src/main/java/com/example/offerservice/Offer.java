@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class Offer {
+public class Offer implements Identifiable<UUID> {
 
 	@Id
 	private UUID id;
